@@ -58,22 +58,28 @@ struct ContentView: View {
                     
                     Button(action: {
                         result = ""
-                        var acceptable: Bool = !(age >= 13)
+                        var acceptable: Bool = false
                         let ticketCost: Double = 30
                         let total: Double = Double(quantity * Int(ticketCost))
-                        if money >= total && age >= 13 {
-                            acceptable.toggle()
+                        
+                        if age >= 13 {
+                            acceptable = true
+                            result += "You are of age at \(age) for the age restriction of 13. "
+                        } else {
+                            result += "You are not of age at \(age). To purchase you must be at least 13. "
                         }
-                        if acceptable {
-                            print(acceptable)
+                        
+                        if quantity >= 1 {
                             if money >= total {
-                                result += "You have enough cash to purchase \(quantity) ticket(s). You have \(money) for \(total) cost of ticket(s) at \(ticketCost) each. At \(age) you are allowed to watch the movie rated for 13 and over. Please take your tickets and be at least 15 min. early before the movie."
+                                result += "You have enough money at \(money). Which is enough to buy \(quantity) of ticket(s) at \(ticketCost) of a total of \(total). Congratulations, please proceed."
                             } else {
-                                result += "You do not have enough cash to purchase \(quantity) ticket(s). You have \(money) for \(total) cost of ticket(s) at \(ticketCost) each. At \(age) you are allowed to watch the movie rated for 13 and over. Please take your tickets and be at least 15 min. early before the movie."
+                                result += "You do not have enough money at \(money). You want to buy \(quantity) quantity of ticket(s) at \(ticketCost) each, at the total cost of \(total). Please prepare more cash or lower your quantity."
                             }
                         } else {
-                            result += "You are not allowed to purchase ticket(s) at \(age) of age. The movie is only for 13 and over."
+                            result += "You aren't buying any tickets at the quantity of \(quantity)."
                         }
+                    
+
                     }) {
                         Text("Check for Eligibility.")
                             .foregroundColor(.white)
